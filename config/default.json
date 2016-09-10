@@ -1,0 +1,6 @@
+{
+  "apiKey": "APIKEY",
+  "services": {
+    "pagespeedUrl" : "http://pagespeed.google.com"
+  }
+}
