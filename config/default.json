@@ -1,5 +1,6 @@
 {
   "services": {
-    "pagespeedUrl" : "http://pagespeed.google.com"
-  }
+    "pagespeedUrl" : "https://www.googleapis.com/pagespeedonline/v2/runPagespeed"
+  },
+  "defaultStrategy": "desktop"
 }
