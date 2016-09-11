@@ -26,15 +26,6 @@ describe('#dataAccess', () => {
           done();
         });
       });
-
-      it('should throw an error when opts.key is undefined', (done) => {
-        let opts = { foo: 'bar', url: 'something' };
-        dataAccess.getRawData(opts, (error) => {
-          expect(error).to.be.an.instanceof(Error);
-          expect(error.message).to.equal('dataAccess.getRawData: api key is required to obtain pagespeed. Please visit https://console.developers.google.com/apis/library to obtain api key for pagespeed insights');
-          done();
-        });
-      });
     });
 
     describe('#stubbed tests', () => {
