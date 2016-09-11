@@ -27,8 +27,17 @@ describe('#dataAccess', () => {
         });
       });
 
+      it('should throw an error when opts.key is undefined', (done) => {
+        let opts = { foo: 'bar', url: 'something' };
+        dataAccess.getRawData(opts, (error) => {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.equal('dataAccess.getRawData: api key is required to obtain pagespeed. Please visit https://console.developers.google.com/apis/library to obtain api key for pagespeed insights');
+          done();
+        });
+      });
+
       it('should throw an error when invalid url is supplied', (done) => {
-        let opts = { url: 'bar' };
+        let opts = { url: 'bar', apiKey: 'someKey' };
         dataAccess.getRawData(opts, (error) => {
           expect(error).to.be.an.instanceof(Error);
           expect(error.message).to.equal('options.uri is a required argument');
@@ -49,7 +58,7 @@ describe('#dataAccess', () => {
       });
 
       it('should return error when non 200 response is returned', (done) => {
-        let opts = { url: 'bar' };
+        let opts = { url: 'bar', apiKey: 'someKey' };
         requestStub.yields(null, { statusCode: 404 }, { foo: 'bar' });
         dataAccess.getRawData(opts, (error) => {
           expect(error).to.be.an.instanceof(Error);
@@ -59,7 +68,7 @@ describe('#dataAccess', () => {
       });
 
       it('should return correct response for valid data', (done) => {
-        let opts = { url: 'bar' };
+        let opts = { url: 'bar', apiKey: 'someKey' };
         requestStub.yields(null, { statusCode: 200 }, { foo: 'bar' });
         dataAccess.getRawData(opts, (error, data) => {
           expect(data).to.deep.equal({ foo: 'bar' });
