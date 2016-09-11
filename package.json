@@ -1,17 +1,20 @@
 {
-  "name": "sstk-pagespeed-lib",
+  "name": "pagespeed-insights",
   "version": "1.0.0",
-  "description": "Library that generates pagespeed info",
+  "description": "Library that generates pagespeed info. Also comes with tiny CLI script.",
   "main": "index.js",
+  "bin": {
+    "pagespeed_cli": "./bin/cli.js"
+  },
   "scripts": {
     "test": "mocha --recursive test/unit",
     "lint": "eslint ./*.js ./lib ./test",
     "cover": "istanbul cover node_modules/.bin/_mocha -- -R spec test/**/*"
   },
   "keywords": [
-    "pagespeed"
+    "pagespeed", "google", "insights", "library", "cli"
   ],
-  "author": "Shweta Sabne <ssabne@shutterstock.com> (https://github.shuttercorp.net/ssabne)",
+  "author": "Shweta Sabne <shwetasabne@gmail.com> (https://github.com/shwetasabne)",
   "license": "ISC",
   "dependencies": {
     "cli-color": "^1.1.0",
