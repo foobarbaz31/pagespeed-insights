@@ -1,6 +1,6 @@
 {
   "name": "pagespeed-insights",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Library that generates pagespeed info. Also comes with tiny CLI script.",
   "main": "index.js",
   "bin": {
@@ -12,7 +12,11 @@
     "cover": "istanbul cover node_modules/.bin/_mocha -- -R spec test/**/*"
   },
   "keywords": [
-    "pagespeed", "google", "insights", "library", "cli"
+    "pagespeed",
+    "google",
+    "insights",
+    "library",
+    "cli"
   ],
   "author": "Shweta Sabne <shwetasabne@gmail.com> (https://github.com/shwetasabne)",
   "license": "ISC",
