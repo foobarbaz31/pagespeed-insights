@@ -9,7 +9,7 @@
 ## Functions
 
 <dl>
-<dt><a href="#getRawData">getRawData(opts)</a> ⇒ <code>Promise.&lt;Object&gt;</code></dt>
+<dt><a href="#getRawData">getRawData(opts)</a> ⇒</dt>
 <dd><p>Makes call to Google&#39;s pagespeed API and fetches data for the url arrays</p>
 </dd>
 <dt><a href="#processRawData">processRawData(rawData)</a> ⇒ <code>Object</code></dt>
@@ -24,31 +24,31 @@ Module that obtains information from Google pagespeed API and formats it
 
 <a name="getRawData"></a>
 
-## getRawData(opts) ⇒ <code>Promise.&lt;Object&gt;</code>
+## getRawData(opts) ⇒
 Makes call to Google's pagespeed API and fetches data for the url arrays
 
 **Kind**: global function  
-**Returns**: <code>Promise.&lt;Object&gt;</code> - - Promise to raw data from pagespeed  
+**Returns**: callback - callback with raw data from pagespeed  
 
 | Param | Type | Description |
 | --- | --- | --- |
 | opts | <code>Object</code> | Object containing url to process, API key |
+| opts.requestUrl | <code>string</code> | Google's endpoint to fetch pagespeed |
 | opts.url | <code>string</code> | url to fetch pagespeed for |
 | opts.apiKey | <code>string</code> | apiKey |
 | opts.strategy | <code>string</code> | desktop or mobile |
 
 **Example**  
 ```js
-// returns request Promise which upon resolving returns raw Data
+// returns callback(err, data)
 // Usage
 const dataAccess = require('dataAccess');
 return dataAccess.getRawData({
   url : 'foobar.com',
   apiKey: 'XYXYXY',
   strategy: 'mobile'
-})
-.then(result => {
-  console.log(JSON.stringify(result, null, 2));
+}, function(err, data){
+  console.log(data);
 });
 ```
 <a name="processRawData"></a>

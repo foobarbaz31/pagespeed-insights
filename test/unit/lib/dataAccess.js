@@ -4,80 +4,67 @@ const expect = require('chai').expect;
 const dataAccess = require('../../../lib/dataAccess.js');
 const sinon = require('sinon');
 const fixture = require('../../fixtures/rawPageSpeedData');
-
-let rp = require('request-promise');
+let request = require('request');
 
 describe('#dataAccess', () => {
-
   describe('#getRawData', () => {
-
     describe('#non-stubbed tests', () => {
-      it('should throw error when opts is undefined', () => {
-        return dataAccess.getRawData()
-          .catch(err => {
-            expect(err).to.be.an.instanceof(Error);
-            expect(err.message).to.equal('dataAccess.getRawData: url not defined');
-          });
+      it('should throw error when opts is undefined', (done) => {
+        let opts;
+        dataAccess.getRawData(opts, (error) => {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.equal('dataAccess.getRawData: opts is not defined');
+          done();
+        });
       });
 
-      it('should throw an error when opts.url is undefined', () => {
-        return dataAccess.getRawData({})
-          .catch(err => {
-            expect(err).to.be.an.instanceof(Error);
-            expect(err.message).to.equal('dataAccess.getRawData: url not defined');
-          });
+      it('should throw an error when opts.url is undefined', (done) => {
+        let opts = { foo: 'bar' };
+        dataAccess.getRawData(opts, (error) => {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.equal('dataAccess.getRawData: opts.url is not defined');
+          done();
+        });
       });
 
-      it('should throw an error when invalid url is supplied', () => {
-        return dataAccess.getRawData({ url: 'foo' })
-          .catch(err => {
-            expect(err).to.be.an.instanceof(Error);
-            expect(err.message).to.equal('dataAccess.getRawData: ' +
-              'RequestError: Error: Invalid URI "foo"');
-          });
+      it('should throw an error when invalid url is supplied', (done) => {
+        let opts = { url: 'bar' };
+        dataAccess.getRawData(opts, (error) => {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.equal('options.uri is a required argument');
+          done();
+        });
       });
     });
 
     describe('#stubbed tests', () => {
-      let rpStub;
+      let requestStub;
 
       beforeEach(() => {
-        rpStub = sinon.stub(rp, 'get');
+        requestStub = sinon.stub(request, 'get');
       });
 
       afterEach(() => {
-        rp.get.restore();
-      });
-      it('should return error when non 200 response is returned', () => {
-        rpStub.returns(Promise.resolve({
-          statusCode: 404,
-          body: {
-            foo: 'bar'
-          }
-        }));
-
-        return dataAccess.getRawData({ url: 'boo' })
-          .catch(err => {
-            expect(err).to.be.an.instanceof(Error);
-            expect(err.message).to.equal('dataAccess.getRawData: Error: dataAccess.getRawData: ' +
-              'Status code 404 not OK');
-          });
+        request.get.restore();
       });
 
-      it('should return correct response for valid url', () => {
-        rpStub.returns(Promise.resolve({
-          statusCode: 200,
-          body: {
-            foo: 'bar'
-          }
-        }));
+      it('should return error when non 200 response is returned', (done) => {
+        let opts = { url: 'bar' };
+        requestStub.yields(null, { statusCode: 404 }, { foo: 'bar' });
+        dataAccess.getRawData(opts, (error) => {
+          expect(error).to.be.an.instanceof(Error);
+          expect(error.message).to.equal('Status code 404 not OK');
+          done();
+        });
+      });
 
-        return dataAccess.getRawData({ url: 'foo' })
-          .then(res => {
-            expect(res).to.deep.equal({
-              foo: 'bar'
-            });
-          });
+      it('should return correct response for valid data', (done) => {
+        let opts = { url: 'bar' };
+        requestStub.yields(null, { statusCode: 200 }, { foo: 'bar' });
+        dataAccess.getRawData(opts, (error, data) => {
+          expect(data).to.deep.equal({ foo: 'bar' });
+          done();
+        });
       });
     });
   });
