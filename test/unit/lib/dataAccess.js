@@ -35,15 +35,6 @@ describe('#dataAccess', () => {
           done();
         });
       });
-
-      it('should throw an error when invalid url is supplied', (done) => {
-        let opts = { url: 'bar', apiKey: 'someKey' };
-        dataAccess.getRawData(opts, (error) => {
-          expect(error).to.be.an.instanceof(Error);
-          expect(error.message).to.equal('options.uri is a required argument');
-          done();
-        });
-      });
     });
 
     describe('#stubbed tests', () => {
