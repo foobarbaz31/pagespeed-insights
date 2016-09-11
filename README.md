@@ -4,7 +4,7 @@ This is a library that fetches [Google Pagespeed Insight](https://developers.goo
 
 For production usage, please obtain [API Key](https://console.developers.google.com/apis?project=xenon-height-615)
 
-This package also comes with a CLI utility for obtaining pagespeed. Please ses [usage](#CLI) for more information.
+This package also comes with a CLI utility for obtaining pagespeed. Please see [usage](#cli) for more information.
 
 ## Installation
 
@@ -59,7 +59,7 @@ Avoid landing page redirects..........0
 Please see https://developers.google.com/speed/docs/insights/rules for more information about the rules.
 ```
 
-If the CLI is run with the *-f option*, the output returned is same as [library usage](#Returns).
+If the CLI is run with the *-f option*, the output returned is same as [library usage](#returns).
 
 ### As a library
 
