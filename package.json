@@ -1,21 +1,27 @@
 {
-  "name": "sstk-pagespeed-lib",
+  "name": "pagespeed-insights",
   "version": "1.0.0",
-  "description": "Library that generates pagespeed info",
+  "description": "Library that generates pagespeed info. Also comes with tiny CLI script.",
   "main": "index.js",
+  "bin": {
+    "pagespeed_cli": "./bin/cli.js"
+  },
   "scripts": {
     "test": "mocha --recursive test/unit",
-    "lint": "eslint ./*.js ./lib ./test"
+    "lint": "eslint ./*.js ./lib ./test",
+    "cover": "istanbul cover node_modules/.bin/_mocha -- -R spec test/**/*"
   },
   "keywords": [
-    "pagespeed"
+    "pagespeed", "google", "insights", "library", "cli"
   ],
-  "author": "Shweta Sabne <ssabne@shutterstock.com> (https://github.shuttercorp.net/ssabne)",
+  "author": "Shweta Sabne <shwetasabne@gmail.com> (https://github.com/shwetasabne)",
   "license": "ISC",
   "dependencies": {
+    "cli-color": "^1.1.0",
     "config": "^1.21.0",
     "lodash": "^4.15.0",
-    "request": "^2.74.0"
+    "request": "^2.74.0",
+    "yargs": "^5.0.0"
   },
   "devDependencies": {
     "chai": "^3.5.0",
@@ -27,6 +33,8 @@
     "jsdoc": "^3.4.0",
     "jsdoc-to-markdown": "^1.3.7",
     "mocha": "^3.0.2",
-    "nock": "^8.0.0"
+    "nock": "^8.0.0",
+    "request": "^2.74.0",
+    "sinon": "^1.17.5"
   }
 }

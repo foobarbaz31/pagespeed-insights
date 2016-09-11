@@ -1,60 +1,7 @@
 'use strict';
-const dataFormatter = require('../helpers/dataFormatter');
-const request = require('request');
-const config = require('config');
 
-/**
- * Makes call to Google's pagespeed API and fetches data for the url arrays
- * @example
- * // returns callback(err, data)
- * // Usage
- * const dataAccess = require('dataAccess');
- * return dataAccess.getRawData({
- *   url : 'foobar.com',
- *   apiKey: 'XYXYXY',
- *   strategy: 'mobile'
- * }, function(err, data){
- *   console.log(data);
- * });
- * @param {Object} opts - Object containing url to process, API key
- * @param {string} opts.requestUrl - Google's endpoint to fetch pagespeed
- * @param {string} opts.url - url to fetch pagespeed for
- * @param {string} opts.apiKey - apiKey
- * @param {string} opts.strategy - desktop or mobile
- * @return callback - callback with raw data from pagespeed
- */
-/*eslint-disable */
-function getRawData (opts, callback) {
-  if (opts === undefined) {
-    return callback(new Error('dataAccess.getRawData: opts is not defined'), null);
-  }
-
-  if(opts.url === undefined) {
-    return callback(new Error('dataAccess.getRawData: opts.url is not defined'), null);
-  }
-
-  let queryParam = {
-    url: opts.url,
-    strategy: opts.strategy || config.defaultStrategy,
-    key: opts.apiKey
-  };
-
-  request.get({ url: config.services.pagespeedUrl, qs: queryParam }, (error, response, body) => {
-    if (error) return callback(error, null);
-
-    if (response.statusCode > 299) {
-      return callback(new Error(`Status code ${response.statusCode} not OK`), null);
-    }
-    return callback(null, body);
-  });
-}
-/*eslint-enable */
-
-/*eslint-disable */
-/**
- * Processes raw data and formats it to a more readable structure
- * @example
- * // returns {
+function getProcessedDataOutputFixture() {
+  let processedData = {
     'http://www.shutterstock.com/': {
       'pageSpeed': 83,
       'rulesInfo': [
@@ -71,9 +18,7 @@ function getRawData (opts, callback) {
         {
           'localisedRuleName': 'Leverage browser caching',
           'ruleImpact': 4.485565476190477,
-          'summary': 'Setting an expiry date or a maximum age in the HTTP headers for static
-            resources instructs the browser to load previously downloaded resources from local
-            disk rather than over the network.',
+          'summary': 'Setting an expiry date or a maximum age in the HTTP headers for static resources instructs the browser to load previously downloaded resources from local disk rather than over the network.',
           'urlBlocks': [
             {
               'header': '<a href=\"https://developers.google.com/speed/docs/insights/LeverageBrowserCaching\">Leverage browser caching</a> for the following cacheable resources:',
@@ -112,11 +57,9 @@ function getRawData (opts, callback) {
           'summary': 'Your JavaScript content is minified. Learn more about <a href=\"https://developers.google.com/speed/docs/insights/MinifyResources\">minifying JavaScript</a>.'
         },
         {
-          'localisedRuleName': 'Eliminate render-blocking JavaScript and
-            CSS in above-the-fold content',
+          'localisedRuleName': 'Eliminate render-blocking JavaScript and CSS in above-the-fold content',
           'ruleImpact': 12,
-          'summary': 'Your page has 5 blocking script resources and 4 blocking CSS resources.
-           This causes a delay in rendering your page.',
+          'summary': 'Your page has 5 blocking script resources and 4 blocking CSS resources. This causes a delay in rendering your page.',
           'urlBlocks': [
             {
               'header': 'None of the above-the-fold content on your page could be rendered without waiting for the following resources to load. Try to defer or asynchronously load blocking resources, or inline the critical portions of those resources directly in the HTML.',
@@ -172,10 +115,12 @@ function getRawData (opts, callback) {
         }
       ]
     }
-  }
- * // Usage
- * const dataAccess = require('dataAccess');
- * dataAccess.processRawData({
+  };
+  return processedData;
+}
+
+function getRawDataInputFixture() {
+  let rawData = {
     'kind': 'pagespeedonline#result',
     'id': 'http://www.shutterstock.com/',
     'responseCode': 200,
@@ -926,64 +871,12 @@ function getRawData (opts, callback) {
       'major': 1,
       'minor': 15
     }
-  });
- * @param {Object} rawData - JSON formatted rawData {@link getRawData}
- * @return {Object} processedData - Processed denormalized data
- */
-/*eslint-enable */
-function processRawData(opts) {
-  if (opts === undefined) {
-    throw (new Error('dataAccess.processRawData: rawData object not defined'));
-  }
+  };
 
-  let processedData = {};
-
-  // Key of processedData is the url
-  if (opts.id === undefined) {
-    throw (new Error('dataAccess.processRawData: id was not returned'));
-  }
-  processedData[opts.id] = {};
-
-  // Pick pagespeed
-  if (opts.ruleGroups === undefined || opts.ruleGroups.SPEED === undefined ||
-    opts.ruleGroups.SPEED.score === undefined) {
-    throw (new Error('dataAccess.processRawData: pageSpeed was not returned'));
-  }
-  processedData[opts.id].pageSpeed = opts.ruleGroups.SPEED.score;
-
-  // Iterate over the ruleResults and start placing them in high, low, medium buckets
-  let formattedResultsData = opts.formattedResults.ruleResults;
-  let ruleArray = [];
-  for (let value of Object.keys(formattedResultsData)) {
-    let tempObject = {};
-
-    // Get localisedRuleName
-    tempObject.localisedRuleName = formattedResultsData[value].localizedRuleName;
-
-    // Fetch ruleImpact
-    tempObject.ruleImpact = formattedResultsData[value].ruleImpact;
-
-    // Build summary data
-    tempObject.summary = dataFormatter.buildSummary(formattedResultsData[value].summary);
-
-    // Build url to fix data
-    let urlBlocks = dataFormatter.buildRulesInfo(formattedResultsData[value].urlBlocks);
-    if (urlBlocks) {
-      tempObject.urlBlocks = dataFormatter.buildRulesInfo(formattedResultsData[value].urlBlocks);
-    }
-
-    ruleArray.push(tempObject);
-  }
-
-  processedData[opts.id].rulesInfo = ruleArray;
-  return processedData;
+  return rawData;
 }
 
-/**
- * Module that obtains information from Google pagespeed API and formats it
- * @module dataAccess
- */
 module.exports = {
-  getRawData,
-  processRawData
+  getRawDataInputFixture,
+  getProcessedDataOutputFixture
 };
