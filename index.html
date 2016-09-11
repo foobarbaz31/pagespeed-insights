@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset='utf-8'>
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+    <link href='https://fonts.googleapis.com/css?family=Architects+Daughter' rel='stylesheet' type='text/css'>
+    <link rel="stylesheet" type="text/css" href="stylesheets/stylesheet.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/github-light.css" media="screen">
+    <link rel="stylesheet" type="text/css" href="stylesheets/print.css" media="print">
+
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+
+    <title>pagespeed-insights by shwetasabne</title>
+  </head>
+
+  <body>
+    <header>
+      <div class="inner">
+        <h1>pagespeed-insights</h1>
+        <h2>Accepts a list of urls, calculates pagespeed and returns the score</h2>
+        <a href="https://github.com/shwetasabne/pagespeed-lib" class="button"><small>View project on</small> GitHub</a>
+      </div>
+    </header>
+
+    <div id="content-wrapper">
+      <div class="inner clearfix">
+        <section id="main-content">
+          <h1>
+<a id="pagespeed-insights" class="anchor" href="#pagespeed-insights" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>pagespeed-insights</h1>
+
+<p><a href="https://travis-ci.org/shwetasabne/pagespeed-lib"><img src="https://travis-ci.org/shwetasabne/pagespeed-lib.svg?branch=master" alt="Build Status"></a></p>
+
+<p>This is a library that fetches <a href="https://developers.google.com/speed/pagespeed/insights/">Google Pagespeed Insight</a> for given url, formats and denormalizes the output in human readable form.</p>
+
+<p>For production usage, please obtain <a href="https://console.developers.google.com/apis?project=xenon-height-615">API Key</a></p>
+
+<p>This package also comes with a CLI utility for obtaining pagespeed. Please see <a href="#cli">usage</a> for more information.</p>
+
+<h2>
+<a id="installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<p>From npm</p>
+
+<div class="highlight highlight-source-js"><pre>npm install pagespeed<span class="pl-k">-</span>insights</pre></div>
+
+<h2>
+<a id="usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="cli" class="anchor" href="#cli" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>CLI</h3>
+
+<p>CLI options are as below:</p>
+
+<div class="highlight highlight-source-js"><pre>Usage<span class="pl-k">:</span> pagespeed_cli <span class="pl-k">--</span>url http<span class="pl-k">:</span><span class="pl-c">//www.google.com --apiKey AxjurIBVT0 --strategy</span>
+mobile
+
+Options<span class="pl-k">:</span>
+  <span class="pl-k">-</span>u, <span class="pl-k">--</span>url        Url to fetch pagespeed results <span class="pl-k">for</span>                 [required]
+  <span class="pl-k">-</span>k, <span class="pl-k">--</span>apiKey     <span class="pl-c1">API</span> key <span class="pl-k">for</span> the Pagespeed Insights <span class="pl-c1">API</span>. <span class="pl-smi">It</span> is recommeded you
+                   pass key <span class="pl-k">for</span> prod usage.
+  <span class="pl-k">-</span>s, <span class="pl-k">--</span>strategy   <span class="pl-c1">UX</span> strategy to get pagespeed <span class="pl-k">for</span>
+                             [choices<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>mobile<span class="pl-pds">"</span></span>, <span class="pl-s"><span class="pl-pds">"</span>desktop<span class="pl-pds">"</span></span>] [default<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>desktop<span class="pl-pds">"</span></span>]
+  <span class="pl-k">-</span>f, <span class="pl-k">--</span>full_view  Pass <span class="pl-v">this</span> option <span class="pl-k">if</span> you want to see full data as returned by
+                   the library                                         [boolean]
+  <span class="pl-k">-</span>h, <span class="pl-k">--</span>help       Show help                                           [boolean]</pre></div>
+
+<p>Example:</p>
+
+<pre><code>&gt; pagespeed_cli -u https://www.google.com/search?q=chocolates 
+------------------------------------------------------------------
+URL: https://www.google.com/search?q=chocolates
+Score: 99
+------------------------------------------------------------------
+
+Leverage browser caching..........0.49975198412698413
+Prioritize visible content..........0
+Optimize images..........0
+Eliminate render-blocking JavaScript and CSS in above-the-fold content..........0
+Minify JavaScript..........0
+Minify HTML..........0
+Minify CSS..........0
+Reduce server response time..........0
+Enable compression..........0
+Avoid landing page redirects..........0
+
+Please see https://developers.google.com/speed/docs/insights/rules for more information about the rules.
+</code></pre>
+
+<p>If the CLI is run with the <em>-f option</em>, the output returned is same as <a href="#returns">library usage</a>.</p>
+
+<h3>
+<a id="as-a-library" class="anchor" href="#as-a-library" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>As a library</h3>
+
+<p>When used as a library, the module accepts <strong>url, apiKey, strategy</strong> and returns denormalized human readable data from the pagespeed insights API.</p>
+
+<p><strong>url</strong>: required parameter.</p>
+
+<p><strong>apiKey</strong>: recommended that it is passed for prod usage.</p>
+
+<p><strong>strategy</strong>: can either <em>mobile or desktop</em>. Defaults to <em>desktop</em></p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">const</span> <span class="pl-c1">pagespeedInsights</span> <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>pagespeed-insights<span class="pl-pds">'</span></span>);
+
+<span class="pl-k">let</span> opts <span class="pl-k">=</span> {
+  url<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>https://www.google.com/search?q=chocolates<span class="pl-pds">'</span></span>,
+  apiKey<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>AxkfuV138x<span class="pl-pds">'</span></span>,
+  strategy<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>mobile<span class="pl-pds">'</span></span>
+};
+
+<span class="pl-en">pagespeedInsights</span>(opts, (<span class="pl-smi">err</span>, <span class="pl-smi">data</span>) <span class="pl-k">=&gt;</span> {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(data);
+});</pre></div>
+
+<h4>
+<a id="returns" class="anchor" href="#returns" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Returns</h4>
+
+<div class="highlight highlight-source-js"><pre>{
+  <span class="pl-s"><span class="pl-pds">"</span>https://www.google.com/#q=chocolates<span class="pl-pds">"</span></span><span class="pl-k">:</span> {
+    <span class="pl-s"><span class="pl-pds">"</span>pageSpeed<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">99</span>,
+    <span class="pl-s"><span class="pl-pds">"</span>rulesInfo<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Avoid landing page redirects<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Your page has no redirects. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/AvoidRedirects<span class="pl-cce">\"</span>&gt;avoiding landing page redirects&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Enable compression<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>You have compression enabled. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/EnableCompression<span class="pl-cce">\"</span>&gt;enabling compression&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Leverage browser caching<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0.4998784722222222</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Setting an expiry date or a maximum age in the HTTP headers for static resources instructs the browser to load previously downloaded resources from local disk rather than over the network.<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>urlBlocks<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
+          {
+            <span class="pl-s"><span class="pl-pds">"</span>header<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>&lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/LeverageBrowserCaching<span class="pl-cce">\"</span>&gt;Leverage browser caching&lt;/a&gt; for the following cacheable resources:<span class="pl-pds">"</span></span>,
+            <span class="pl-s"><span class="pl-pds">"</span>urlsToFix<span class="pl-pds">"</span></span><span class="pl-k">:</span> [
+              "https://www.google.com/maps/vt/data=RfCSdfNZ0LFPrHSm0ublXdzhdrDFhtmHhN1u-gM,rySAMorOvXy5MCje9kcgVR5K9sB7Ik2LLoxa2YH7cguSY-1tZDmRe5Cx4cBQgz8XjicrUF227LDBmK1sSuTa-K6e3Q5muaYr2iU5oAH6PUq_JgfTPYyM1bBwZnBbcSnzv2wCsZP8oKNqT9Dcyz1ch6vjaJvOTULyuludMJjxs5Epn4adI1GJA220-KxGNtNoCzPXKcpfRJ9ZlPNA1wWBPtvz-G9tKpNj28TNuKl1i-CNAn8kvj88n6aKabhxM2PXS5I21uuUND9S4-LsTLKvLJi9XkvEg7eyl2hwcCONUOhwh86noKdEUHt96GnQ_EaCoIv6nahZOjafbSvYTLpQuJ_XbfX1WJMjhbnPkYmq-FOPASqkZsqyjtQx4qMYLtcVIEvfa-sJhbVZRAUkrxv3_IKIbsQpqRJv9ciykxcqoMJh3BBmMS0QHhI3YWRSRZwzB-9HzS_NhGy-7LSd_cQaqiHg01_SgdZpWITRYCDEOK92A73hkpxbXTFmWYmRDITJ7hf5ZjgUHnaaqz_-_HiIKsLjcu36fXcFSU4u-buWJkflOdLgzg3qUH_mWmNJkNyYcEkC3nfLkNrs1Kk_iKXxyJpcUXiV8yqa_UAS4LjlJJ3rV3c1ssZ8GlB34sLPsHathJuMDLAEFGJYKuLNC9LmSPSPJGBVs5n2v4V7T4mEjM1ReCW2T_kd5I_4UQvtI0uEPNoH5MDPD396tD8S-AA-CB-foO_SHrdSRMdYmSw1iNNzqyOLe3u9B4PuyftB-OuxT-GncEa6Rabe9_IMI-8hXAUuV18SN4ggQVLQah0r2L_BhEvn2MzFutX_SLcrbYGeCzibIi2wZEZFCwFuNBt3qqVJ1Sm56abMmIsP6xOkoNUCoEgsXwmyAtXQ0neyNsEYjzG1ZIKDe2ksTK5oBi7SZT9bSLZp5Y9upLSN6GmKz_T1Xfps9baHlp5CgOQTMmNLDmHbmGmXVFfgX-YJaE64mnAIUCdcxqIoBF4fwqPikxMEn7mwccdFaX5QckeX8QgMi-s8ZM5D0zLsN0nqAmiNGHKLSJ1gBPQKe_XkYqc (2.4 minutes)"
+            ]
+          }
+        ]
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Reduce server response time<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Your server responded quickly. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/Server<span class="pl-cce">\"</span>&gt;server response time optimization&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Minify CSS<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Your CSS is minified. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/MinifyResources<span class="pl-cce">\"</span>&gt;minifying CSS&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Minify HTML<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Your HTML is minified. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/MinifyResources<span class="pl-cce">\"</span>&gt;minifying HTML&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Minify JavaScript<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Your JavaScript content is minified. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/MinifyResources<span class="pl-cce">\"</span>&gt;minifying JavaScript&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Eliminate render-blocking JavaScript and CSS in above-the-fold content<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>You have no render-blocking resources. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/BlockingJS<span class="pl-cce">\"</span>&gt;removing render-blocking resources&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Optimize images<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Your images are optimized. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/OptimizeImages<span class="pl-cce">\"</span>&gt;optimizing images&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      },
+      {
+        <span class="pl-s"><span class="pl-pds">"</span>localisedRuleName<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>Prioritize visible content<span class="pl-pds">"</span></span>,
+        <span class="pl-s"><span class="pl-pds">"</span>ruleImpact<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-c1">0</span>,
+        <span class="pl-s"><span class="pl-pds">"</span>summary<span class="pl-pds">"</span></span><span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">"</span>You have the above-the-fold content properly prioritized. Learn more about &lt;a href=<span class="pl-cce">\"</span>https://developers.google.com/speed/docs/insights/PrioritizeVisibleContent<span class="pl-cce">\"</span>&gt;prioritizing visible content&lt;/a&gt;.<span class="pl-pds">"</span></span>
+      }
+    ]
+  }
+}</pre></div>
+        </section>
+
+        <aside id="sidebar">
+          <a href="https://github.com/shwetasabne/pagespeed-lib/zipball/master" class="button">
+            <small>Download</small>
+            .zip file
+          </a>
+          <a href="https://github.com/shwetasabne/pagespeed-lib/tarball/master" class="button">
+            <small>Download</small>
+            .tar.gz file
+          </a>
+
+          <p class="repo-owner"><a href="https://github.com/shwetasabne/pagespeed-lib"></a> is maintained by <a href="https://github.com/shwetasabne">shwetasabne</a>.</p>
+
+          <p>This page was generated by <a href="https://pages.github.com">GitHub Pages</a> using the Architect theme by <a href="https://twitter.com/jasonlong">Jason Long</a>.</p>
+        </aside>
+      </div>
+    </div>
+
+  
+  </body>
+</html>
