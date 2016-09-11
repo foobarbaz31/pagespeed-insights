@@ -8,7 +8,7 @@ const pagespeed = require('./../index');
 const lodash = require('lodash');
 
 const argv = require('yargs')
-  .usage('Usage: getPageSpeed --url http://www.google.com --apiKey AxjurIBVT0 --strategy mobile')
+  .usage('Usage: pagespeed_cli --url http://www.google.com --apiKey AxjurIBVT0 --strategy mobile')
   .alias('u', 'url')
   .nargs('u', 1)
   .describe('u', 'Url to fetch pagespeed results for')
@@ -22,7 +22,7 @@ const argv = require('yargs')
   .default('s', 'desktop')
   .nargs('s', 1)
   .alias('f', 'full_view')
-  .describe('f', 'Pass this option if you want to see full data')
+  .describe('f', 'Pass this option if you want to see full data as returned by the library')
   .boolean(['f'])
   .demand(['u'])
   .help('h')
