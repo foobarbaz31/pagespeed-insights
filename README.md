@@ -40,17 +40,16 @@ Options:
 Example:
 
 ```
-> pagespeed_cli --url http://www.google.com 
-
+> pagespeed_cli -u https://www.google.com/search?q=chocolates 
 ------------------------------------------------------------------
-URL: http://www.shutterstock.com/
-Score: 83
+URL: https://www.google.com/search?q=chocolates
+Score: 99
 ------------------------------------------------------------------
 
-Eliminate render-blocking JavaScript and CSS in above-the-fold content..........12
-Leverage browser caching..........4.485565476190477
-Optimize images..........2.443
+Leverage browser caching..........0.49975198412698413
 Prioritize visible content..........0
+Optimize images..........0
+Eliminate render-blocking JavaScript and CSS in above-the-fold content..........0
 Minify JavaScript..........0
 Minify HTML..........0
 Minify CSS..........0
@@ -77,7 +76,7 @@ When used as a library, the module accepts **url, apiKey, strategy** and returns
 const pagespeedInsights = require('pagespeed-insights');
 
 let opts = {
-  url: 'http://www.shutterstock.com',
+  url: 'https://www.google.com/search?q=chocolates',
   apiKey: 'AxkfuV138x',
   strategy: 'mobile'
 };
@@ -90,8 +89,8 @@ pagespeedInsights(opts, (err, data) => {
 #### Returns
 ```javascript
 {
-  "http://www.shutterstock.com/": {
-    "pageSpeed": 82,
+  "https://www.google.com/#q=chocolates": {
+    "pageSpeed": 99,
     "rulesInfo": [
       {
         "localisedRuleName": "Avoid landing page redirects",
@@ -105,14 +104,13 @@ pagespeedInsights(opts, (err, data) => {
       },
       {
         "localisedRuleName": "Leverage browser caching",
-        "ruleImpact": 4.976851851851852,
+        "ruleImpact": 0.4998784722222222,
         "summary": "Setting an expiry date or a maximum age in the HTTP headers for static resources instructs the browser to load previously downloaded resources from local disk rather than over the network.",
         "urlBlocks": [
           {
             "header": "<a href=\"https://developers.google.com/speed/docs/insights/LeverageBrowserCaching\">Leverage browser caching</a> for the following cacheable resources:",
             "urlsToFix": [
-              "http://tag.bounceexchange.com/1406/i.js (60 seconds)",
-              "http://d3cxv97fi8q177.cloudfront.net/foundation-A35053-1a4e-4aac-bf5e-08a4b85602231.js (5 minutes)"
+              "https://www.google.com/maps/vt/data=RfCSdfNZ0LFPrHSm0ublXdzhdrDFhtmHhN1u-gM,rySAMorOvXy5MCje9kcgVR5K9sB7Ik2LLoxa2YH7cguSY-1tZDmRe5Cx4cBQgz8XjicrUF227LDBmK1sSuTa-K6e3Q5muaYr2iU5oAH6PUq_JgfTPYyM1bBwZnBbcSnzv2wCsZP8oKNqT9Dcyz1ch6vjaJvOTULyuludMJjxs5Epn4adI1GJA220-KxGNtNoCzPXKcpfRJ9ZlPNA1wWBPtvz-G9tKpNj28TNuKl1i-CNAn8kvj88n6aKabhxM2PXS5I21uuUND9S4-LsTLKvLJi9XkvEg7eyl2hwcCONUOhwh86noKdEUHt96GnQ_EaCoIv6nahZOjafbSvYTLpQuJ_XbfX1WJMjhbnPkYmq-FOPASqkZsqyjtQx4qMYLtcVIEvfa-sJhbVZRAUkrxv3_IKIbsQpqRJv9ciykxcqoMJh3BBmMS0QHhI3YWRSRZwzB-9HzS_NhGy-7LSd_cQaqiHg01_SgdZpWITRYCDEOK92A73hkpxbXTFmWYmRDITJ7hf5ZjgUHnaaqz_-_HiIKsLjcu36fXcFSU4u-buWJkflOdLgzg3qUH_mWmNJkNyYcEkC3nfLkNrs1Kk_iKXxyJpcUXiV8yqa_UAS4LjlJJ3rV3c1ssZ8GlB34sLPsHathJuMDLAEFGJYKuLNC9LmSPSPJGBVs5n2v4V7T4mEjM1ReCW2T_kd5I_4UQvtI0uEPNoH5MDPD396tD8S-AA-CB-foO_SHrdSRMdYmSw1iNNzqyOLe3u9B4PuyftB-OuxT-GncEa6Rabe9_IMI-8hXAUuV18SN4ggQVLQah0r2L_BhEvn2MzFutX_SLcrbYGeCzibIi2wZEZFCwFuNBt3qqVJ1Sm56abMmIsP6xOkoNUCoEgsXwmyAtXQ0neyNsEYjzG1ZIKDe2ksTK5oBi7SZT9bSLZp5Y9upLSN6GmKz_T1Xfps9baHlp5CgOQTMmNLDmHbmGmXVFfgX-YJaE64mnAIUCdcxqIoBF4fwqPikxMEn7mwccdFaX5QckeX8QgMi-s8ZM5D0zLsN0nqAmiNGHKLSJ1gBPQKe_XkYqc (2.4 minutes)"
             ]
           }
         ]
@@ -139,40 +137,13 @@ pagespeedInsights(opts, (err, data) => {
       },
       {
         "localisedRuleName": "Eliminate render-blocking JavaScript and CSS in above-the-fold content",
-        "ruleImpact": 12,
-        "summary": "Your page has 5 blocking script resources and 4 blocking CSS resources. This causes a delay in rendering your page.",
-        "urlBlocks": [
-          {
-            "header": "None of the above-the-fold content on your page could be rendered without waiting for the following resources to load. Try to defer or asynchronously load blocking resources, or inline the critical portions of those resources directly in the HTML.",
-            "urlsToFix": []
-          },
-          {
-            "header": "<a href=\"https://developers.google.com/speed/docs/insights/BlockingJS\">Remove render-blocking JavaScript</a>:",
-            "urlsToFix": [
-              "http://www2.shutterstock.com/base/public/js/common-head-3bd0063ac8.js"
-            ]
-          },
-          {
-            "header": "<a href=\"https://developers.google.com/speed/docs/insights/OptimizeCSSDelivery\">Optimize CSS Delivery</a> of the following:",
-            "urlsToFix": [
-              "http://www2.shutterstock.com/base/public/css/app-40d08c3363.css"
-            ]
-          }
-        ]
+        "ruleImpact": 0,
+        "summary": "You have no render-blocking resources. Learn more about <a href=\"https://developers.google.com/speed/docs/insights/BlockingJS\">removing render-blocking resources</a>."
       },
       {
         "localisedRuleName": "Optimize images",
-        "ruleImpact": 2.443,
-        "summary": "Properly formatting and compressing images can save many bytes of data.",
-        "urlBlocks": [
-          {
-            "header": "<a href=\"https://developers.google.com/speed/docs/insights/OptimizeImages\">Optimize the following images</a> to reduce their size by 22.8KiB (16% reduction).",
-            "urlsToFix": [
-              "Compressing http://ak.picdn.net/assets/cms/817ebf1c7395bfbf9cf73233a334882593f75f38-blog_image.jpg could save 11.7KiB (12% reduction).",
-              "Compressing http://ak.picdn.net/assets/cms/f87a2acad5057eeb51209064542358035f416452-img_icons_2x.jpg could save 3.3KiB (17% reduction)."
-            ]
-          }
-        ]
+        "ruleImpact": 0,
+        "summary": "Your images are optimized. Learn more about <a href=\"https://developers.google.com/speed/docs/insights/OptimizeImages\">optimizing images</a>."
       },
       {
         "localisedRuleName": "Prioritize visible content",
