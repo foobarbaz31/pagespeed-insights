@@ -11,6 +11,10 @@
     "lint": "eslint ./*.js ./lib ./test",
     "cover": "istanbul cover node_modules/.bin/_mocha -- -R spec test/**/*"
   },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/shwetasabne/pagespeed-insights.git"
+  },
   "keywords": [
     "pagespeed",
     "google",
@@ -19,6 +23,10 @@
     "cli"
   ],
   "author": "Shweta Sabne <shwetasabne@gmail.com> (https://github.com/shwetasabne)",
+  "bugs": {
+    "url": "https://github.com/shwetasabne/pagespeed-insights/issues"
+  },
+  "homepage": "https://shwetasabne.github.io/pagespeed-insights/",
   "license": "ISC",
   "dependencies": {
     "cli-color": "^1.1.0",
