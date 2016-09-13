@@ -1,6 +1,6 @@
 # pagespeed-insights
 
-[![Build Status](https://travis-ci.org/shwetasabne/pagespeed-lib.svg?branch=master)](https://travis-ci.org/shwetasabne/pagespeed-lib)
+[![Build Status](https://travis-ci.org/shwetasabne/pagespeed-insights.svg?branch=master)](https://travis-ci.org/shwetasabne/pagespeed-insights)
 
 This is a library that fetches [Google Pagespeed Insight](https://developers.google.com/speed/pagespeed/insights/) for given url, formats and denormalizes the output in human readable form.
 
